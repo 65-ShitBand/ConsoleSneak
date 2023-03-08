@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZXC;
 
 namespace ConsoleSneak {
     class Game {
@@ -53,8 +52,16 @@ namespace ConsoleSneak {
 
         public void AddFruit() {
             var random = new Random(Guid.NewGuid().GetHashCode());
+            var x = random.Next(1, size - 1);
+            var y = random.Next(1, size - 1);
 
-            map[random.Next(1, size - 1)][random.Next(1, size - 1)] = 'J';
+            while (map[x][y] == '0' || map[x][y] == '@')
+            {
+                x = random.Next(1, size - 1);
+                y = random.Next(1, size - 1);
+            }
+
+            map[x][y] = 'J';
         }
 
         public void DrawAll() {
