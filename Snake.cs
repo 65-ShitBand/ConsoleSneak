@@ -21,22 +21,26 @@ namespace ConsoleSneak {
             switch (pressedKey.Key.ToString()) {
                 case "RightArrow":
                 case "D":
-                    handler.X += 1;
+                    if (handler.X + 1 == 9) handler.X = 1;
+                    else handler.X += 1;
                     break;
 
                 case "LeftArrow":
                 case "A":
-                    handler.X -= 1;
+                    if (handler.X - 1 == 0) handler.X = 8;
+                    else handler.X -= 1;
                     break;
 
                 case "UpArrow":
                 case "W":
-                    handler.Y -= 1;
+                    if (handler.Y - 1 == 0) handler.Y = 8;
+                    else handler.Y -= 1;
                     break;
 
                 case "DownArrow":
                 case "S":
-                    handler.Y += 1;
+                    if (handler.Y + 1 == 9) handler.Y = 1;
+                    else handler.Y += 1;
                     break;
             }
 
