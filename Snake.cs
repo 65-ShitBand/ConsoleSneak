@@ -42,11 +42,11 @@ namespace ConsoleSneak {
 
             body.Enqueue(handler);
             furtherStep = handler;
-            return body.Dequeue();
+            return body.First();
         }
 
         public void ChangeLength(Point furtherStep) {
-            body.Enqueue(new Point(furtherStep.Y, furtherStep.X));
+            body.Enqueue(new Point(furtherStep.X, furtherStep.Y));
         }
     }
 }

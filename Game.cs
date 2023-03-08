@@ -38,15 +38,19 @@ namespace ConsoleSneak {
 
         public void ChangeSnakePosition() {
             var deletedAss = snake.Move(out furtherStep);
+            bool eat = map[furtherStep.Y][furtherStep.X] == 'J';
 
-            if (map[furtherStep.Y][furtherStep.X] == 'J') {
-                snake.ChangeLength(furtherStep);
+            if (!eat)
+            {
+                snake.body.Dequeue();
             }
 
-            foreach (Point partOfBody in snake.body) {
-                map[partOfBody.Y][partOfBody.X] = '0';
-                map[deletedAss.Y][deletedAss.X] = ' ';
+            foreach (Point partOfBody in snake.body)
+            {
+                map[partOfBody.Y][partOfBody.X] = '0';                
             }
+
+            if (!eat) map[deletedAss.Y][deletedAss.X] = ' ';
             map[snake.body.Last().Y][snake.body.Last().X] = '@';
         }
 
@@ -55,7 +59,7 @@ namespace ConsoleSneak {
             var x = random.Next(1, size - 1);
             var y = random.Next(1, size - 1);
 
-            while (map[x][y] == '0' || map[x][y] == '@')
+            while (map[x][y] == '0' || map[x][y] == '@' || map[x][y] == 'J')
             {
                 x = random.Next(1, size - 1);
                 y = random.Next(1, size - 1);
