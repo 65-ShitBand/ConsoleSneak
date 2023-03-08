@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,6 +11,7 @@ namespace ConsoleSneak {
         Int32 size;
         static Int32 timer = 0;
         Point furtherStep;
+        Point deletedAss;
 
         public Game(int size) {
             this.size = size;
@@ -37,6 +37,7 @@ namespace ConsoleSneak {
         }
 
         public void ChangeSnakePosition() {
+
             var deletedAss = snake.Move(out furtherStep);
             bool eat = map[furtherStep.Y][furtherStep.X] == 'J';
 
@@ -45,6 +46,7 @@ namespace ConsoleSneak {
                 snake.body.Dequeue();
             }
 
+
             foreach (Point partOfBody in snake.body)
             {
                 map[partOfBody.Y][partOfBody.X] = '0';                
@@ -52,6 +54,7 @@ namespace ConsoleSneak {
 
             if (!eat) map[deletedAss.Y][deletedAss.X] = ' ';
             map[snake.body.Last().Y][snake.body.Last().X] = '@';
+            
         }
 
         public void AddFruit() {
