@@ -12,6 +12,7 @@ namespace ConsoleSneak {
         Int32 size;
         static Int32 timer = 0;
         Point furtherStep;
+        Point deletedAss;
 
         public Game(int size) {
             this.size = size;
@@ -37,7 +38,7 @@ namespace ConsoleSneak {
         }
 
         public void ChangeSnakePosition() {
-            var deletedAss = snake.Move(out furtherStep);
+            deletedAss = snake.Move(out furtherStep);
 
             if (map[furtherStep.Y][furtherStep.X] == 'J') {
                 snake.ChangeLength(furtherStep);
@@ -45,9 +46,10 @@ namespace ConsoleSneak {
 
             foreach (Point partOfBody in snake.body) {
                 map[partOfBody.Y][partOfBody.X] = '0';
-                map[deletedAss.Y][deletedAss.X] = ' ';
             }
+            map[deletedAss.Y][deletedAss.X] = ' ';
             map[snake.body.Last().Y][snake.body.Last().X] = '@';
+            
         }
 
         public void AddFruit() {
