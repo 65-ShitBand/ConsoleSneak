@@ -42,7 +42,7 @@ namespace ConsoleSneak {
 
             body.Enqueue(handler);
             furtherStep = handler;
-            return body.Dequeue();
+            return body.First();
         }
 
         public void ChangeLength(Point furtherStep) {

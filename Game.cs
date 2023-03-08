@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -38,16 +37,22 @@ namespace ConsoleSneak {
         }
 
         public void ChangeSnakePosition() {
-            deletedAss = snake.Move(out furtherStep);
 
-            if (map[furtherStep.Y][furtherStep.X] == 'J') {
-                snake.ChangeLength(furtherStep);
+            var deletedAss = snake.Move(out furtherStep);
+            bool eat = map[furtherStep.Y][furtherStep.X] == 'J';
+
+            if (!eat)
+            {
+                snake.body.Dequeue();
             }
 
-            foreach (Point partOfBody in snake.body) {
-                map[partOfBody.Y][partOfBody.X] = '0';
+
+            foreach (Point partOfBody in snake.body)
+            {
+                map[partOfBody.Y][partOfBody.X] = '0';                
             }
-            map[deletedAss.Y][deletedAss.X] = ' ';
+
+            if (!eat) map[deletedAss.Y][deletedAss.X] = ' ';
             map[snake.body.Last().Y][snake.body.Last().X] = '@';
             
         }
@@ -57,7 +62,7 @@ namespace ConsoleSneak {
             var x = random.Next(1, size - 1);
             var y = random.Next(1, size - 1);
 
-            while (map[x][y] == '0' || map[x][y] == '@')
+            while (map[x][y] == '0' || map[x][y] == '@' || map[x][y] == 'J')
             {
                 x = random.Next(1, size - 1);
                 y = random.Next(1, size - 1);
