@@ -33,7 +33,7 @@ namespace ConsoleSneak {
         public void ShowMap() {
             foreach (StringBuilder str in map) {
                 Console.WriteLine(str);
-            }
+            }   
         }
 
         public void ChangeSnakePosition() {
@@ -73,6 +73,7 @@ namespace ConsoleSneak {
 
         public void DrawAll() {
             ShowMap();
+            ShowScore();
             ChangeSnakePosition();
         }
 
@@ -84,6 +85,18 @@ namespace ConsoleSneak {
                 AddFruit();
                 timer = 0;
             } else timer++;
+        }
+
+        public void ShowScore()
+        {
+            ShowColored(snake.body.Count().ToString(), ConsoleColor.Red);
+        }
+
+        public void ShowColored(string str, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(str);
+            Console.ResetColor();
         }
 
         public static void ClearVisibleRegion()
