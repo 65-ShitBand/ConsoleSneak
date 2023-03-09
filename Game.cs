@@ -31,8 +31,10 @@ namespace ConsoleSneak {
         }
 
         public void ShowMap() {
+            Int32 lot = 0;
             foreach (StringBuilder str in map) {
                 string line = str.ToString();
+                Console.SetCursorPosition(Console.WindowWidth / 2 - size / 2, Console.WindowHeight / 2 + lot - size / 2);
                 foreach (char c in line)
                 {
                     switch(c)
@@ -57,6 +59,7 @@ namespace ConsoleSneak {
                     }
                 }
                 Console.WriteLine();
+                lot++;
             }   
         }
 
@@ -113,6 +116,7 @@ namespace ConsoleSneak {
 
         public void ShowScore()
         {
+            Console.SetCursorPosition(Console.WindowWidth / 2 - size / 2, Console.WindowHeight / 2 + size - size / 2);
             ShowColored("Score: " + snake.body.Count().ToString(), ConsoleColor.Red);
         }
 
@@ -125,7 +129,7 @@ namespace ConsoleSneak {
         {
             Console.ForegroundColor = color;
             Console.Write(str);
-            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public static void ClearVisibleRegion()
