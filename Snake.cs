@@ -15,7 +15,10 @@ namespace ConsoleSneak {
             body.Enqueue(new Point(placeOfBirth / 2, placeOfBirth / 2));
         }
         public Point Move(out Point furtherStep) {
+            Console.ForegroundColor = Console.BackgroundColor;
             var pressedKey = Console.ReadKey();
+            Console.ForegroundColor = ConsoleColor.White;
+
             Point handler = body.Last();
             
             switch (pressedKey.Key.ToString()) {
