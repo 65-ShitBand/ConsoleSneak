@@ -77,13 +77,26 @@ namespace ConsoleSneak {
         }
 
         public void StartGame() {
-            Console.Clear();
             DrawAll();
+            ClearVisibleRegion();
 
             if (timer == 7) {
                 AddFruit();
                 timer = 0;
             } else timer++;
+        }
+
+        public static void ClearVisibleRegion()
+        {
+            int cursorTop = Console.CursorTop;
+            int cursorLeft = Console.CursorLeft;
+            for (int y = Console.WindowTop; y < Console.WindowTop + Console.WindowHeight; y++)
+            {
+                Console.SetCursorPosition(Console.WindowLeft, y);
+                Console.Write(new string(' ', Console.WindowWidth));
+            }
+
+            Console.SetCursorPosition(Console.WindowLeft, Console.WindowTop);
         }
     }
 }
