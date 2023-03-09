@@ -14,7 +14,7 @@ namespace ConsoleSneak {
         Point furtherStep;
         Point deletedAss;
 
-        public Game(int size) {
+        public Game(int size, int speed) {
             this.size = size;
             furtherStep = new Point();
 
@@ -28,7 +28,7 @@ namespace ConsoleSneak {
             }
             #endregion
 
-            snake = new Snake(size);
+            snake = new Snake(size, speed);
         }
 
         public void ShowMap() {
