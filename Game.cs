@@ -32,7 +32,31 @@ namespace ConsoleSneak {
 
         public void ShowMap() {
             foreach (StringBuilder str in map) {
-                Console.WriteLine(str);
+                string line = str.ToString();
+                foreach (char c in line)
+                {
+                    switch(c)
+                    {
+                        case '|':
+                        case '-':
+                            ShowColored(c.ToString(), ConsoleColor.Gray); 
+                            break;
+
+                        case '@':
+                        case '0':
+                            ShowColored(c.ToString(), ConsoleColor.Green);
+                            break;
+
+                        case 'J':
+                            ShowColored(c.ToString(), ConsoleColor.Magenta);
+                            break;
+
+                        default:
+                            ShowColored(c.ToString(), ConsoleColor.White);
+                            break;
+                    }
+                }
+                Console.WriteLine();
             }   
         }
 
@@ -89,13 +113,18 @@ namespace ConsoleSneak {
 
         public void ShowScore()
         {
-            ShowColored(snake.body.Count().ToString(), ConsoleColor.Red);
+            ShowColored("Score: " + snake.body.Count().ToString(), ConsoleColor.Red);
         }
 
+        /// <summary>
+        /// Выводит строку str в цвете color.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="color"></param>
         public void ShowColored(string str, ConsoleColor color)
         {
             Console.ForegroundColor = color;
-            Console.WriteLine(str);
+            Console.Write(str);
             Console.ResetColor();
         }
 
