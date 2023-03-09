@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace ConsoleSneak {
     class Snake {
+        string moveDirection = "W";
+        Int32 speed = 1000;
+
         public Queue<Point> body { get; private set; }
         private int fieldSize;
         Game game;
-        public Snake(int placeOfBirth) {
+        
+        public Snake(int placeOfBirth, int speed = 0)
+        {
             fieldSize = placeOfBirth;
             body = new Queue<Point>();
             body.Enqueue(new Point(placeOfBirth / 2, placeOfBirth / 2));
+            this.speed = speed;
         }
         public void EndGame()
         {
@@ -32,10 +38,27 @@ namespace ConsoleSneak {
             }
         }
         public Point Move(out Point furtherStep) {
-            var pressedKey = Console.ReadKey();
+
             Point handler = body.Last();
-            Point first = body.First();
-            switch (pressedKey.Key.ToString()) {
+            bool pressed = false;
+
+            for (int i = 0; i < speed * 1000; i += 1)
+            {
+                if (Console.KeyAvailable && !pressed)
+                {
+                    Console.ForegroundColor = Console.BackgroundColor;
+                    var nmd = Console.ReadKey().Key.ToString();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (nmd == "D" || nmd == "S" || nmd == "A" || nmd == "W" || nmd == "RightArrow" || nmd == "LeftArrow" || nmd == "UpArrow" || nmd == "DownArrow")
+                    {
+                        moveDirection = nmd;
+                        pressed = true;
+                    }   
+                }
+            }
+            
+            switch (moveDirection) {
+            
                 case "RightArrow":
                 case "D":
                     if (handler.X + 1 == fieldSize - 1) handler.X = 1;

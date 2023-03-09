@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ConsoleSneak {
     class Game {
         public static StringBuilder[] map;
@@ -13,21 +14,21 @@ namespace ConsoleSneak {
         Point furtherStep;
         Point deletedAss;
 
-        public Game(int size) {
+        public Game(int size, int speed) {
             this.size = size;
             furtherStep = new Point();
 
             #region mapInicialization
             map = new StringBuilder[size];
-            map[0] = new StringBuilder(new string('-', size), size);
-            map[size - 1] = new StringBuilder(new string('-', size), size);
+            map[0] = new StringBuilder(new string('#', size), size);
+            map[size - 1] = new StringBuilder(new string('#', size), size);
 
             for (Int32 i = 1; i < size - 1; i++) {
                 map[i] = new StringBuilder($"|{new String(' ', size - 2)}|");
             }
             #endregion
 
-            snake = new Snake(size);
+            snake = new Snake(size, speed);
         }
 
         public void ShowMap() {
@@ -39,17 +40,20 @@ namespace ConsoleSneak {
                 {
                     switch(c)
                     {
+                        case '#':
                         case '|':
-                        case '-':
                             ShowColored(c.ToString(), ConsoleColor.Gray); 
                             break;
 
                         case '@':
-                        case '0':
+                            ShowColored(c.ToString(), ConsoleColor.Cyan);
+                            break;
+
+                        case '§':
                             ShowColored(c.ToString(), ConsoleColor.Green);
                             break;
 
-                        case 'J':
+                        case '¤':
                             ShowColored(c.ToString(), ConsoleColor.Magenta);
                             break;
 
@@ -66,7 +70,7 @@ namespace ConsoleSneak {
         public void ChangeSnakePosition() {
 
             var deletedAss = snake.Move(out furtherStep);
-            bool eat = map[furtherStep.Y][furtherStep.X] == 'J';
+            bool eat = map[furtherStep.Y][furtherStep.X] == '¤';
 
             if (!eat)
             {
@@ -76,7 +80,7 @@ namespace ConsoleSneak {
 
             foreach (Point partOfBody in snake.body)
             {
-                map[partOfBody.Y][partOfBody.X] = '0';                
+                map[partOfBody.Y][partOfBody.X] = '§';                
             }
 
             if (!eat) map[deletedAss.Y][deletedAss.X] = ' ';
@@ -89,13 +93,13 @@ namespace ConsoleSneak {
             var x = random.Next(1, size - 1);
             var y = random.Next(1, size - 1);
 
-            while (map[x][y] == '0' || map[x][y] == '@' || map[x][y] == 'J')
+            while (map[x][y] == '§' || map[x][y] == '@' || map[x][y] == '¤')
             {
                 x = random.Next(1, size - 1);
                 y = random.Next(1, size - 1);
             }
 
-            map[x][y] = 'J';
+            map[x][y] = '¤';
         }
 
         public void DrawAll() {
@@ -105,7 +109,6 @@ namespace ConsoleSneak {
         }
 
         public void StartGame() {
-            ClearVisibleRegion();
             DrawAll();
 
             if (timer == 7) {
@@ -130,19 +133,6 @@ namespace ConsoleSneak {
             Console.ForegroundColor = color;
             Console.Write(str);
             Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        public static void ClearVisibleRegion()
-        {
-            int cursorTop = Console.CursorTop;
-            int cursorLeft = Console.CursorLeft;
-            for (int y = Console.WindowTop; y < Console.WindowTop + Console.WindowHeight; y++)
-            {
-                Console.SetCursorPosition(Console.WindowLeft, y);
-                Console.Write(new string(' ', Console.WindowWidth));
-            }
-
-            Console.SetCursorPosition(Console.WindowLeft, Console.WindowTop);
         }
     }
 }
