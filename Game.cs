@@ -77,8 +77,8 @@ namespace ConsoleSneak {
         }
 
         public void StartGame() {
-            DrawAll();
             ClearVisibleRegion();
+            DrawAll();
 
             if (timer == 7) {
                 AddFruit();
