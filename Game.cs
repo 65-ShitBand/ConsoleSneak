@@ -85,7 +85,7 @@ namespace ConsoleSneak {
 
             if (!eat) map[deletedAss.Y][deletedAss.X] = ' ';
             map[snake.body.Last().Y][snake.body.Last().X] = '@';
-            
+       
         }
 
         public void AddFruit() {
@@ -115,6 +115,12 @@ namespace ConsoleSneak {
                 AddFruit();
                 timer = 0;
             } else timer++;
+        }
+
+        public void EndGame()
+        {
+            Console.WriteLine(" GAME OVER!");
+            Environment.Exit(0);
         }
 
         public void ShowScore()
