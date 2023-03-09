@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleSneak {
@@ -12,12 +13,29 @@ namespace ConsoleSneak {
 
         public Queue<Point> body { get; private set; }
         private int fieldSize;
+        Game game;
+        
         public Snake(int placeOfBirth, int speed = 0)
         {
             fieldSize = placeOfBirth;
             body = new Queue<Point>();
             body.Enqueue(new Point(placeOfBirth / 2, placeOfBirth / 2));
             this.speed = speed;
+        }
+        public void EndGame()
+        {
+            Console.WriteLine("GAME OVER!");
+            Environment.Exit(0);
+        }
+        public void CheckAlive(int x, int y)
+        {
+            foreach (Point pnt in body)
+            {
+                if (pnt.X == x && pnt.Y == y)
+                {
+                    EndGame();
+                }
+            }
         }
         public Point Move(out Point furtherStep) {
 
@@ -40,6 +58,7 @@ namespace ConsoleSneak {
             }
             
             switch (moveDirection) {
+            
                 case "RightArrow":
                 case "D":
                     if (handler.X + 1 == fieldSize - 1) handler.X = 1;
@@ -64,7 +83,10 @@ namespace ConsoleSneak {
                     else handler.Y += 1;
                     break;
             }
-
+            if (body.Count > 1)
+            {
+                CheckAlive(handler.X, handler.Y);
+            }
             body.Enqueue(handler);
             furtherStep = handler;
             return body.First();

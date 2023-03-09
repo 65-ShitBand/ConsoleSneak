@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleSneak {
     class Game {
-        StringBuilder[] map;
+        public static StringBuilder[] map;
         Snake snake;
         Int32 size;
         static Int32 timer = 0;
